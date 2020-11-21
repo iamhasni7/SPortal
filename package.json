@@ -1,0 +1,17 @@
+{
+  "name": "sportal",
+  "version": "1.0.0",
+  "description": "Web portal for fire data.",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js",
+    "restart": "nodemon rs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hussnain",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pug": "^3.0.0"
+  }
+}
