@@ -1,26 +1,33 @@
+//- doctype html
+html 
 
-doctype html
-html
   head
     title SPortal
     link(rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="")  
 
     script(src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="")
-
-  body
-    #mapid(style='width: 600px; height: 400px;')
+    style='* {margin:0; padding:0;}'
+  
+  body 
+    #mapid(style='width:100% ; height:100%;')
     script.
       //- sets the view to the inital area
-      var mymap = L.map('mapid').setView([31.5204, 74.3587], 6);
-      var access_token = 'pk.eyJ1Ijoic21qdW5pb3IiLCJhIjoiY2toczRodHVwMHB1ZzJ3bWM5ZXV6Z3VsMiJ9.lZ0o1S-LFNr_XMKRa-CLvA';
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + access_token, 
-        {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: access_token
-        }).addTo(mymap);
+      //- var mymap = L.map('mapid').setView([31.5204, 74.3587], 6);
+      var mymap = L.map('mapid', {center: [31.1704, 72.7097],zoom: 7,layers: grayscale, cities});
+
+      var access_token = 'pk.eyJ1Ijoic21qdW5pb3IiLCJhIjoiY2toczRodHVwMHB1ZzJ3bWM5ZXV6Z3VsMiJ9.lZ0o1S-LFNr_XMKRa-CLvA'; 
+       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + access_token, {attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>', maxZoom: 18, id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, accessToken: access_token}).addTo(mymap);
+       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + access_token, {id: 'mapid', tileSize: 512, zoomOffset: -1, attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'}), streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + access_token, {id: 'mapid', tileSize: 512, zoomOffset: -1, attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'});
+
+      var lahore = L.marker([31.5204, 74.3587]);
+      var faisalabad = L.marker([31.4504, 73.1350]);
+      var cities = L.layerGroup([lahore, faisalabad]);
+
+      var baseMaps = {"Grayscale": grayscale,"Streets": streets};
+      var overlayMaps = {"Cities": cities};
+      var baseMaps = {"Grayscale": grayscale};
+      L.control.layers(baseMaps, overlayMaps).addTo(mymap);
+
+      //- var baseMaps = {"<span style='color: gray'>Grayscale</span>": grayscale, "Streets": streets};
         
-        console.log('map', mymap)
+      //- console.log('map', mymap);
